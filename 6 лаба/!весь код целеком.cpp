@@ -6,38 +6,23 @@
 #include <algorithm>
 #include <cctype>
 
-// Класс для однонаправленного списка
+// Шаблонный класс для однонаправленного списка
+template <typename T>
 class SinglyLinkedList {
 private:
     // Вложенная структура для узла списка
     struct Node {
-        int data;   // Данные, хранящиеся в узле
+        T data;     // Данные, хранящиеся в узле
         Node* next; // Указатель на следующий узел
-        Node(int value) : data(value), next(nullptr) {} // Конструктор узла
+        Node(T value) : data(value), next(nullptr) {} // Конструктор узла
     };
     Node* head; // Указатель на голову списка
 
 public:
     SinglyLinkedList() : head(nullptr) {} // Инициализация списка с пустой головой
 
-    // Метод для удаления дубликатов из списка
-    void RemoveDuplicates() {
-        if (!head) return; // Если список пуст, выходим
-        Node* current = head;
-        while (current && current->next) {
-            // Если текущий элемент равен следующему
-            if (current->data == current->next->data) {
-                Node* duplicate = current->next;  // Дублирующий узел
-                current->next = duplicate->next;  // Пропускаем дублирующий узел
-                delete duplicate;  // Удаляем дублирующий узел
-            } else {
-                current = current->next;  // Переходим к следующему элементу
-            }
-        }
-    }
-
     // Метод для добавления элемента в конец списка
-    void Add(int value) {
+    void Add(T value) {
         if (!head) {  // Если список пуст, создаем новый узел
             head = new Node(value);
         } else {
@@ -58,17 +43,34 @@ public:
         }
         std::cout << std::endl;
     }
+
+    // Метод для удаления дубликатов из списка
+    void RemoveDuplicates() {
+        if (!head) return; // Если список пуст, выходим
+        Node* current = head;
+        while (current && current->next) {
+            // Если текущий элемент равен следующему
+            if (current->data == current->next->data) {
+                Node* duplicate = current->next;  // Дублирующий узел
+                current->next = duplicate->next;  // Пропускаем дублирующий узел
+                delete duplicate;  // Удаляем дублирующий узел
+            } else {
+                current = current->next;  // Переходим к следующему элементу
+            }
+        }
+    }
 };
 
-// Класс для двунаправленного списка
+// Шаблонный класс для двунаправленного списка
+template <typename T>
 class DoublyLinkedList {
 private:
     // Вложенная структура для узла двунаправленного списка
     struct Node {
-        int data;   // Данные, хранящиеся в узле
+        T data;     // Данные
         Node* next; // Указатель на следующий узел
         Node* prev; // Указатель на предыдущий узел
-        Node(int value) : data(value), next(nullptr), prev(nullptr) {} // Конструктор узла
+        Node(T value) : data(value), next(nullptr), prev(nullptr) {} // Конструктор
     };
     Node* head; // Указатель на голову списка
 
@@ -76,15 +78,15 @@ public:
     DoublyLinkedList() : head(nullptr) {} // Инициализация списка с пустой головой
 
     // Метод для добавления элемента в конец двунаправленного списка
-    void Add(int value) {
-        if (!head) {  // Если список пуст, создаем новый узел
+    void Add(T value) {
+        if (!head) {
             head = new Node(value);
         } else {
             Node* temp = head;
-            while (temp->next) {  // Ищем последний элемент списка
+            while (temp->next) {  // Ищем последний элемент
                 temp = temp->next;
             }
-            temp->next = new Node(value);  // Добавляем новый элемент в конец
+            temp->next = new Node(value);  // Добавляем новый узел
             temp->next->prev = temp;  // Устанавливаем указатель на предыдущий узел
         }
     }
@@ -100,7 +102,7 @@ public:
     }
 };
 
-// Класс для неупорядоченного списка с уникальными элементами (используется std::set)
+// Шаблонный класс для набора уникальных элементов
 template <typename T>
 class UnorderedList {
 private:
@@ -114,7 +116,7 @@ public:
 
     // Метод для проверки наличия элемента в наборе
     bool Contains(T value) const {
-        return data.find(value) != data.end();  // Проверяем, есть ли элемент в множестве
+        return data.find(value) != data.end();  // Проверяем наличие элемента
     }
 
     // Метод для объединения двух наборов
@@ -144,7 +146,7 @@ public:
 
 // Задание 1: Однонаправленный список (удаление дубликатов)
 void Task1() {
-    SinglyLinkedList list;
+    SinglyLinkedList<int> list;
     list.Add(1);
     list.Add(1);
     list.Add(2);
@@ -162,12 +164,12 @@ void Task1() {
 
 // Задание 2: Перенос данных из однонаправленного списка в двунаправленный
 void Task2() {
-    SinglyLinkedList singleList;
+    SinglyLinkedList<int> singleList;
     singleList.Add(1);
     singleList.Add(2);
     singleList.Add(3);
 
-    DoublyLinkedList doubleList;
+    DoublyLinkedList<int> doubleList;
     std::cout << "Исходный однонаправленный список: ";
     singleList.Print();
 
