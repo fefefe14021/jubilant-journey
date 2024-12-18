@@ -59,6 +59,14 @@ public:
             }
         }
     }
+void TransferToDoublyLinkedList(const SinglyLinkedList<int>& singleList, DoublyLinkedList<int>& doubleList) {
+    Node* temp = singleList.head;  // Доступ к первому элементу однонаправленного списка
+    while (temp != nullptr) {
+        doubleList.Add(temp->data);  // Добавляем данные из однонаправленного списка в двунаправленный
+        temp = temp->next;  // Переходим к следующему элементу однонаправленного списка
+    }
+}
+
 };
 
 //  класс для двунаправленного списка
@@ -173,14 +181,12 @@ void Task2() {
     std::cout << "Исходный однонаправленный список: ";
     singleList.Print();
 
-    // Перенос данных из однонаправленного списка в двунаправленный
-    doubleList.Add(1);
-    doubleList.Add(2);
-    doubleList.Add(3);
+    TransferToDoublyLinkedList(singleList, doubleList);  // Перенос данных в двунаправленный список
 
     std::cout << "Построенный двунаправленный список: ";
     doubleList.Print();
 }
+
 
 // Задание 3: Факультативы студентов (операции с неупорядоченными наборами)
 void Task3() {
