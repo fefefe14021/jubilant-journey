@@ -246,7 +246,7 @@ void Task4() {
     std::set<char> oddIndexChars;  // Множество для хранения символов с нечётных позициях
 
     size_t wordIndex = 1;  // Номер текущего слова (начинаем с 1)
-    while (file >> word) {  // Чтение файла по словам
+    while (file >> word) { 
         if (wordIndex % 2 != 0) {  // Если номер слова нечётный
             for (char ch : word) {  // Проходим по каждому символу в слове
                 if (std::isalpha(ch)) {  // Если символ — буква
