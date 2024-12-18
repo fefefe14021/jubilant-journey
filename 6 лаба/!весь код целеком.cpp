@@ -6,10 +6,10 @@
 #include <algorithm>
 #include <cctype>
 
-//  класс для однонаправленного списка
+// Шаблонный класс для однонаправленного списка
 template <typename T>
 class SinglyLinkedList {
-private:
+public:
     // Вложенная структура для узла списка
     struct Node {
         T data;     // Данные, хранящиеся в узле
@@ -18,7 +18,6 @@ private:
     };
     Node* head; // Указатель на голову списка
 
-public:
     SinglyLinkedList() : head(nullptr) {} // Инициализация списка с пустой головой
 
     // Метод для добавления элемента в конец списка
@@ -44,6 +43,11 @@ public:
         std::cout << std::endl;
     }
 
+    // Публичный метод для получения указателя на первый элемент списка
+    Node* GetHead() const {
+        return head;  // Возвращаем указатель на голову списка
+    }
+
     // Метод для удаления дубликатов из списка
     void RemoveDuplicates() {
         if (!head) return; // Если список пуст, выходим
@@ -59,17 +63,9 @@ public:
             }
         }
     }
-void TransferToDoublyLinkedList(const SinglyLinkedList<int>& singleList, DoublyLinkedList<int>& doubleList) {
-    Node* temp = singleList.head;  // Доступ к первому элементу однонаправленного списка
-    while (temp != nullptr) {
-        doubleList.Add(temp->data);  // Добавляем данные из однонаправленного списка в двунаправленный
-        temp = temp->next;  // Переходим к следующему элементу однонаправленного списка
-    }
-}
-
 };
 
-//  класс для двунаправленного списка
+// Шаблонный класс для двунаправленного списка
 template <typename T>
 class DoublyLinkedList {
 private:
@@ -110,6 +106,14 @@ public:
     }
 };
 
+// Функция для переноса данных из однонаправленного списка в двунаправленный
+void TransferToDoublyLinkedList(const SinglyLinkedList<int>& singleList, DoublyLinkedList<int>& doubleList) {
+    SinglyLinkedList<int>::Node* temp = singleList.GetHead(); 
+    while (temp != nullptr) {
+        doubleList.Add(temp->data);  // Добавляем данные из однонаправленного списка в двунаправленный
+        temp = temp->next;  // Переходим к следующему элементу однонаправленного списка
+    }
+}
 // Шаблонный класс для набора уникальных элементов
 template <typename T>
 class UnorderedList {
@@ -181,12 +185,12 @@ void Task2() {
     std::cout << "Исходный однонаправленный список: ";
     singleList.Print();
 
-    TransferToDoublyLinkedList(singleList, doubleList);  // Перенос данных в двунаправленный список
+    // Перенос данных из однонаправленного списка в двунаправленный
+    TransferToDoublyLinkedList(singleList, doubleList);
 
     std::cout << "Построенный двунаправленный список: ";
     doubleList.Print();
 }
-
 
 // Задание 3: Факультативы студентов (операции с неупорядоченными наборами)
 void Task3() {
@@ -218,7 +222,7 @@ void Task3() {
     any.Print();
 
     // Разность: факультативы, на которые не записан ни один студент
-    std::set<std::string> allCourses = {"Math", "Physics", "Biology", "Chemistry", "History"};
+    std::set<std::string> allCourses = {"Math", "Physics", "Biology", "Chemistry", "History","PE"};
     UnorderedList<std::string> none;
 
     for (const auto& course : allCourses) {
@@ -239,7 +243,7 @@ void Task4() {
     }
 
     std::string word;  // Переменная для чтения слов
-    std::set<char> oddIndexChars;  // Множество для хранения символов с нечётных позиций
+    std::set<char> oddIndexChars;  // Множество для хранения символов с нечётных позициях
 
     size_t wordIndex = 1;  // Номер текущего слова (начинаем с 1)
     while (file >> word) {  // Чтение файла по словам
