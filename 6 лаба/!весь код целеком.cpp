@@ -6,7 +6,7 @@
 #include <algorithm>
 #include <cctype>
 
-// Шаблонный класс для однонаправленного списка
+//  класс для однонаправленного списка
 template <typename T>
 class SinglyLinkedList {
 private:
@@ -61,7 +61,7 @@ public:
     }
 };
 
-// Шаблонный класс для двунаправленного списка
+//  класс для двунаправленного списка
 template <typename T>
 class DoublyLinkedList {
 private:
